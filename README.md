@@ -59,4 +59,5 @@ git commit -m "docs(cum-X): cap nhat tai lieu va so do"
 git push origin <ten-nhanh-cua-ban>
 ```
 
-Lưu ý: Thay `X` bằng số cụm và `<ten-nhanh-cua-ban>` bằng tên nhánh ở Bước 3 (Ví dụ: `git push origin feature/module-2-course`). Sau khi push thành công, nhắn vào nhóm để nhóm trưởng kiểm tra và gộp (merge) vào nhánh `main`.
+Lưu ý: Thay `X` bằng số cụm và `<ten-nhanh-cua-ban>` bằng tên nhánh ở Bước 3 (Ví dụ: `git push origin feature/module-2-course`). 
+Sau khi push thành công, nhắn vào nhóm để nhóm trưởng kiểm tra và gộp (merge) vào nhánh `main`.
