@@ -1,7 +1,11 @@
-﻿@page "/"
+﻿@page "/admin-nhan-su"
 @rendermode InteractiveServer
 @using QL_Thi_Trac_Nghiem.BUS
 @using QL_Thi_Trac_Nghiem.DTO
+
+@using QL_Thi_Trac_Nghiem.Web.Services
+@inject NavigationManager NavManager
+@inject PhienDangNhapService PhienDN
 
 <PageTitle>Quản lý Nhân sự & Thống kê (Web Blazor)</PageTitle>
 
@@ -292,6 +296,18 @@
 
     protected override void OnInitialized()
     {
+        if (!PhienDN.DaDangNhap)
+        {
+            NavManager.NavigateTo("/");
+            return;
+        }
+
+        if (!PhienDN.LaAdmin)
+        {
+            NavManager.NavigateTo("/giao-vien");
+            return;
+        }
+
         TaiDanhMucTuSQL();
         TaiTatCaNhanSu();
     }
