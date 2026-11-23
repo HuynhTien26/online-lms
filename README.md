@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # quiz-management-system
 Ứng dụng Quản lý thi trắc nghiệm viết bằng C# – Hỗ trợ quản lý ngân hàng câu hỏi, tạo đề ngẫu nhiên, làm bài thi có đếm ngược, chấm điểm tự động và thống kê báo cáo kết quả. 
 
@@ -37,3 +38,7 @@ QL_Thi_Trac_Nghiem/
         ├── FormAdmin.cs         # Màn hình Quản trị viên quản lý Giảng viên & Sinh viên
         ├── FormGiaoVien.cs      # Màn hình Giảng viên quản lý môn, câu hỏi, ma trận, đề thi
         └── FormSinhVien.cs      # Màn hình Sinh viên làm bài thi và xem kết quả
+=======
+# online-lms
+Hệ thống Quản lý Học tập Trực tuyến (LMS) – Nền tảng học trực tuyến toàn diện hỗ trợ quản lý khóa học, bài giảng video, thi trắc nghiệm tự động, theo dõi tiến độ và phân quyền RBAC (Admin, Instructor, Student).
+>>>>>>> e18c2a6be727abc95a91a39c13119b2446304302
