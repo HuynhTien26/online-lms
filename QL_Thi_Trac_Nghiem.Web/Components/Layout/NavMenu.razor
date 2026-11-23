@@ -27,6 +27,19 @@
                 Đăng xuất
             </button>
         }
+        @if (PhienDN.DaDangNhap)
+        {
+            <button type="button" class="btn btn-outline-light fw-semibold" @onclick="MoDoiMatKhau">
+                Đổi mật khẩu
+            </button>
+
+            @if (!PhienDN.LaAdmin)
+            {
+                <button type="button" class="btn btn-light fw-semibold" @onclick="DangXuat">
+                    Đăng xuất
+                </button>
+            }
+        }
     </nav>
 </div>
 
@@ -43,6 +56,7 @@
 
     private void MoQuanLyNhanSu() => NavManager.NavigateTo("/admin-nhan-su");
     private void MoQuanLyHeThong() => NavManager.NavigateTo("/giao-vien");
+    private void MoDoiMatKhau() => NavManager.NavigateTo("/doi-mat-khau");
 
     private void DangXuat()
     {

@@ -1,0 +1,107 @@
+@page "/doi-mat-khau"
+@rendermode InteractiveServer
+@using QL_Thi_Trac_Nghiem.BUS
+@using QL_Thi_Trac_Nghiem.Web.Services
+@inject PhienDangNhapService PhienDN
+@inject NavigationManager NavManager
+
+<PageTitle>Đổi mật khẩu</PageTitle>
+
+@if (!PhienDN.DaDangNhap)
+{
+    <div class="alert alert-warning mt-4">
+        Bạn cần đăng nhập trước khi đổi mật khẩu.
+        <button type="button" class="btn btn-sm btn-primary ms-2" @onclick='() => NavManager.NavigateTo("/")'>
+            Đi đến Đăng nhập
+        </button>
+    </div>
+}
+else
+{
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 75vh;">
+        <div class="card shadow-sm p-4" style="width: 100%; max-width: 450px;">
+            <h4 class="text-center fw-bold mb-3">ĐỔI MẬT KHẨU</h4>
+            <p class="text-muted small text-center mb-4">
+                Tài khoản: <strong>@PhienDN.MaNguoiDung</strong> (@PhienDN.VaiTroHienThi) — Mật khẩu ban đầu mặc định là <strong>123456</strong>.
+            </p>
+
+            @if (!string.IsNullOrEmpty(thongBao))
+            {
+                <div class="alert @(thanhCong ? "alert-success" : "alert-danger") py-2" role="alert">
+                    @thongBao
+                </div>
+            }
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Mật khẩu hiện tại:</label>
+                <input type="password" class="form-control" @bind="matKhauCu" @bind:event="oninput"
+                       placeholder="Nhập mật khẩu hiện tại (mặc định 123456)" />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-semibold">Mật khẩu mới:</label>
+                <input type="password" class="form-control" @bind="matKhauMoi" @bind:event="oninput"
+                       placeholder="Nhập mật khẩu mới (tối thiểu 6 ký tự)" />
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label fw-semibold">Xác nhận mật khẩu mới:</label>
+                <input type="password" class="form-control" @bind="xacNhanMatKhauMoi" @bind:event="oninput"
+                       placeholder="Nhập lại mật khẩu mới" />
+            </div>
+
+            <div class="d-flex gap-2 justify-content-end">
+                <button type="button" class="btn btn-secondary" @onclick="QuayLai">
+                    Quay lại
+                </button>
+                <button type="button" class="btn btn-primary" @onclick="XuLyDoiMatKhau">
+                    Lưu mật khẩu mới
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private readonly TaiKhoanBUS taiKhoanBUS = new TaiKhoanBUS();
+
+    private string matKhauCu = string.Empty;
+    private string matKhauMoi = string.Empty;
+    private string xacNhanMatKhauMoi = string.Empty;
+    private string thongBao = string.Empty;
+    private bool thanhCong = false;
+
+    private void XuLyDoiMatKhau()
+    {
+        thongBao = string.Empty;
+        thanhCong = false;
+
+        if (matKhauMoi.Trim() != xacNhanMatKhauMoi.Trim())
+        {
+            thongBao = "Mật khẩu mới và xác nhận mật khẩu không khớp!";
+            return;
+        }
+
+        try
+        {
+            thanhCong = taiKhoanBUS.DoiMatKhau(PhienDN.MaNguoiDung, matKhauCu, matKhauMoi, out thongBao);
+            if (thanhCong)
+            {
+                matKhauCu = string.Empty;
+                matKhauMoi = string.Empty;
+                xacNhanMatKhauMoi = string.Empty;
+            }
+        }
+        catch (Exception ex)
+        {
+            thongBao = "Lỗi khi cập nhật mật khẩu: " + ex.Message;
+        }
+    }
+
+    private void QuayLai()
+    {
+        if (PhienDN.LaAdmin) NavManager.NavigateTo("/admin-nhan-su");
+        else if (PhienDN.LaGiaoVien) NavManager.NavigateTo("/giao-vien");
+        else NavManager.NavigateTo("/sinh-vien");
+    }
+}

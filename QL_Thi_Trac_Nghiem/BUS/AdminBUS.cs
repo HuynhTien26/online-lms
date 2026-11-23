@@ -80,6 +80,7 @@ namespace QL_Thi_Trac_Nghiem.BUS
         public void ThemGiaoVien(GiangVienDTO gv)
         {
             dao.ThemGiaoVien(gv);
+            dao.TaoTaiKhoanMacDinh(gv.MaGV, $"{gv.HoLot} {gv.Ten}".Trim(), "GV", "123456");
             DocDSGV().Add(gv);
         }
 
@@ -153,6 +154,7 @@ namespace QL_Thi_Trac_Nghiem.BUS
         public void ThemSinhVien(SinhVienDTO sv)
         {
             dao.ThemSinhVien(sv);
+            dao.TaoTaiKhoanMacDinh(sv.MaSV, $"{sv.HoLot} {sv.Ten}".Trim(), "SV", "123456");
             DocDSSV().Add(sv);
         }
 

@@ -626,5 +626,28 @@ namespace QL_Thi_Trac_Nghiem.DAO
             return list;
         }
 
+        public void TaoTaiKhoanMacDinh(string tenDangNhap, string hoTen, string loaiTaiKhoan, string matKhauMacDinh = "123456")
+        {
+            using (SqlConnection conn = MyConnection.GetConnection())
+            {
+                conn.Open();
+                string query = @"
+            IF NOT EXISTS (SELECT 1 FROM TaiKhoan WHERE TenDangNhap = @TenDangNhap)
+            BEGIN
+                INSERT INTO TaiKhoan (TenDangNhap, MatKhau, HoTen, LoaiTaiKhoan, PhaiDoiMatKhau)
+                VALUES (@TenDangNhap, @MatKhau, @HoTen, @LoaiTaiKhoan, 1);
+            END";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@TenDangNhap", tenDangNhap.Trim());
+                    cmd.Parameters.AddWithValue("@MatKhau", matKhauMacDinh);
+                    cmd.Parameters.AddWithValue("@HoTen", hoTen ?? "");
+                    cmd.Parameters.AddWithValue("@LoaiTaiKhoan", loaiTaiKhoan);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
     }
 }
